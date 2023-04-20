@@ -36,7 +36,7 @@ type Group struct {
 
 	CourseID    uint
 	TeacherID   uint
-	TimetableID uint
+	TimeTableID uint
 	Title       string
 	StartDate   time.Time
 
