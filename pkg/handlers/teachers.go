@@ -22,6 +22,21 @@ func (h *handler) GetAllTeachers(c *gin.Context) {
 	c.JSON(http.StatusOK, teachers)
 }
 
+func (h *handler) CreateTeacher(c *gin.Context) {
+	var teacher models.Teacher
+	err := c.ShouldBindJSON(&teacher)
+	if err != nil {
+		log.Println("creating teacher:", err)
+		c.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{
+			"message": "validation error",
+			"err":     err.Error(),
+		})
+		return
+	}
+	h.DB.Create(&teacher)
+	c.JSON(http.StatusCreated, teacher)
+}
+
 func (h *handler) GetOneTeacher(c *gin.Context) {
 	teacherID, err := strconv.Atoi(c.Param("teacherID"))
 	if err != nil {
@@ -43,4 +58,12 @@ func (h *handler) GetOneTeacher(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, teacher)
+}
+
+func (h *handler) UpdateTeacher(c *gin.Context) {
+
+}
+
+func (h *handler) DeleteTeacher(c *gin.Context) {
+
 }

@@ -56,7 +56,10 @@ func main() {
 	router := gin.Default()
 
 	router.GET("/teachers", h.GetAllTeachers)
+	router.POST("/teachers", h.CreateTeacher)
 	router.GET("/teachers/:teacherID", h.GetOneTeacher)
+	router.PUT("/teachers/:teacherID", h.UpdateTeacher)
+	router.DELETE("/teachers/:teacherID", h.DeleteTeacher)
 
 	router.Run(":4000")
 }
