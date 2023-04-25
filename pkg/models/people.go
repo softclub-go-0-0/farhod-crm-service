@@ -19,17 +19,15 @@ type Teacher struct {
 }
 
 type Student struct {
-	ID uint `gorm:"primarykey"`
+	ID        uint           `json:"id" gorm:"primarykey"`
+	GroupID   uint           `json:"group_id"`
+	Name      string         `json:"name"`
+	Surname   string         `json:"surname"`
+	Phone     string         `json:"phone"`
+	Email     string         `json:"email"`
+	CreatedAt time.Time      `json:"created_at"`
+	UpdatedAt time.Time      `json:"updated_at"`
+	DeletedAt gorm.DeletedAt `json:"-" gorm:"index"`
 
-	GroupID uint
-	Name    string
-	Surname string
-	Phone   string
-	Email   string
-
-	CreatedAt time.Time
-	UpdatedAt time.Time
-	DeletedAt gorm.DeletedAt `gorm:"index"`
-
-	Group Group
+	Group *Group `json:"group,omitempty"`
 }

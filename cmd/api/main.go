@@ -26,7 +26,7 @@ func DBInit(user, password, dbname, port string) (*gorm.DB, error) {
 	err = db.AutoMigrate(
 		&models.Teacher{},
 		&models.Course{},
-		&models.TimeTable{},
+		&models.Timetable{},
 		&models.Group{},
 		&models.Student{},
 	)
