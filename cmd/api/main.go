@@ -61,7 +61,14 @@ func main() {
 	router.PUT("/teachers/:teacherID", h.UpdateTeacher)
 	router.DELETE("/teachers/:teacherID", h.DeleteTeacher)
 
+	//groups := router.Group("/groups")
+	//{
+	//	groups.GET("/", h.GetAllTeachers)
+	//	groups.GET("/:groupID", h.GetAllTeachers)
+	//}
+
 	router.POST("/students", h.CreateStudent)
+	router.POST("/timetables", h.CreateTimetable)
 
 	router.Run(":4000")
 }

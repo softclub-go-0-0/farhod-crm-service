@@ -7,9 +7,9 @@ import (
 
 type Course struct {
 	ID         uint           `json:"id" gorm:"primarykey"`
-	Title      string         `json:"title"`
-	MonthlyFee uint           `json:"monthly_fee"`
-	Duration   uint           `json:"duration"`
+	Title      string         `json:"title" binding:"required"`
+	MonthlyFee uint           `json:"monthly_fee" binding:"omitempty,number"`
+	Duration   uint           `json:"duration" binding:"omitempty,number"`
 	CreatedAt  time.Time      `json:"created_at"`
 	UpdatedAt  time.Time      `json:"updated_at"`
 	DeletedAt  gorm.DeletedAt `json:"-" gorm:"index"`
@@ -18,10 +18,10 @@ type Course struct {
 }
 
 type Timetable struct {
-	ID        uint           `json:"id" gorm:"primarykey"`
-	Classroom string         `json:"classroom"`
-	Start     time.Time      `json:"start"`
-	Finish    time.Time      `json:"finish"`
+	ID        uint           `json:"id" gorm:"primarykey"`         // 22
+	Classroom string         `json:"classroom" binding:"required"` // "96"
+	Start     Time           `json:"start" binding:"required"`
+	Finish    Time           `json:"finish" binding:"required"`
 	CreatedAt time.Time      `json:"created_at"`
 	UpdatedAt time.Time      `json:"updated_at"`
 	DeletedAt gorm.DeletedAt `json:"-" gorm:"index"`
