@@ -61,5 +61,7 @@ func main() {
 	router.PUT("/teachers/:teacherID", h.UpdateTeacher)
 	router.DELETE("/teachers/:teacherID", h.DeleteTeacher)
 
+	router.POST("/students", h.CreateStudent)
+
 	router.Run(":4000")
 }
