@@ -61,15 +61,36 @@ func main() {
 	router.PUT("/teachers/:teacherID", h.UpdateTeacher)
 	router.DELETE("/teachers/:teacherID", h.DeleteTeacher)
 
-	//groups := router.Group("/groups")
-	//{
-	//	groups.GET("/", h.GetAllTeachers)
-	//	groups.GET("/:groupID", h.GetAllTeachers)
-	//}
+	router.GET("/courses", h.GetAllTeachers)
+	router.POST("/courses", h.CreateTeacher)
+	router.GET("/courses/:courseID", h.GetOneTeacher)
+	router.PUT("/courses/:courseID", h.UpdateTeacher)
+	router.DELETE("/courses/:courseID", h.DeleteTeacher)
 
-	router.POST("/students", h.CreateStudent)
-	router.POST("/timetables", h.CreateTimetable)
-	router.POST("/groups", h.CreateGroup)
+	router.GET("/timetables", h.GetAllTeachers)
+	router.POST("/timetables", h.CreateTeacher)
+	router.GET("/timetables/:timetablesID", h.GetOneTeacher)
+	router.PUT("/timetables/:timetablesID", h.UpdateTeacher)
+	router.DELETE("/timetables/:timetablesID", h.DeleteTeacher)
+
+	groups := router.Group("/groups")
+	{
+		groups.GET("/", h.GetAllTeachers)
+		groups.POST("/", h.CreateTeacher)
+		groups.GET("/:groupID", h.GetOneTeacher)
+		groups.PUT("/:groupID", h.UpdateTeacher)
+		groups.DELETE("/:groupID", h.DeleteTeacher)
+
+		students := groups.Group("/:groupID/students")
+		{
+			students.GET("/", h.GetAllTeachers)
+			// implemented
+			students.POST("/", h.CreateStudent)
+			students.GET("/:studentID", h.GetOneTeacher)
+			students.PUT("/:studentID", h.UpdateTeacher)
+			students.DELETE("/:studentID", h.DeleteTeacher)
+		}
+	}
 
 	router.Run(":4000")
 }
