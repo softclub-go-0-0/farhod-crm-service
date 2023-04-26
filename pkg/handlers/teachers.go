@@ -61,7 +61,23 @@ func (h *handler) GetOneTeacher(c *gin.Context) {
 }
 
 func (h *handler) UpdateTeacher(c *gin.Context) {
-
+	var teacher models.Teacher
+	err := h.DB.Where("id = ?", c.Param("teacherID")).First(&teacher).Error
+	if err != nil {
+		log.Println("getting a teacher:", err)
+		c.AbortWithStatusJSON(http.StatusNotFound, gin.H{
+			"message": "There is no such teacher",
+		})
+		return
+	}
+	err = c.ShouldBindJSON(&teacher)
+	if err != nil {
+		//log.Println("")
+		c.AbortWithStatus(http.StatusUnprocessableEntity)
+		return
+	}
+	//h.DB.Model(&teacher).Update(teacher)
+	h.DB.Save(&teacher)
 }
 
 func (h *handler) DeleteTeacher(c *gin.Context) {
