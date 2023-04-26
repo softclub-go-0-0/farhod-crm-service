@@ -18,8 +18,8 @@ type Course struct {
 }
 
 type Timetable struct {
-	ID        uint           `json:"id" gorm:"primarykey"`         // 22
-	Classroom string         `json:"classroom" binding:"required"` // "96"
+	ID        uint           `json:"id" gorm:"primarykey"`
+	Classroom string         `json:"classroom" binding:"required"`
 	Start     Time           `json:"start" binding:"required"`
 	Finish    Time           `json:"finish" binding:"required"`
 	CreatedAt time.Time      `json:"created_at"`
@@ -32,8 +32,8 @@ type Group struct {
 	CourseID    uint           `json:"course_id"`
 	TeacherID   uint           `json:"teacher_id"`
 	TimetableID uint           `json:"timetable_id"`
-	Title       string         `json:"title"`
-	StartDate   time.Time      `json:"start_date"`
+	Title       string         `json:"title" binding:"required"`
+	StartDate   Date           `json:"start_date" binding:"required"`
 	CreatedAt   time.Time      `json:"created_at"`
 	UpdatedAt   time.Time      `json:"updated_at"`
 	DeletedAt   gorm.DeletedAt `json:"-" gorm:"index"`

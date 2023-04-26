@@ -7,11 +7,12 @@ import (
 	"net/http"
 )
 
-func (h *handler) CreateTimetable(c *gin.Context) {
-	var timetable models.Timetable
-	err := c.ShouldBindJSON(&timetable)
+// CreateGroup need to work
+func (h *handler) CreateGroup(c *gin.Context) {
+	var group models.Group
+	err := c.ShouldBindJSON(&group)
 	if err != nil {
-		log.Println("create timetable:", err)
+		log.Println("create group:", err)
 		c.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{
 			"message": "Validation error",
 			"errors":  err.Error(),
@@ -19,13 +20,13 @@ func (h *handler) CreateTimetable(c *gin.Context) {
 		return
 	}
 
-	if h.DB.Create(&timetable).Error != nil {
-		log.Println("inserting timetable data to DB:", err)
+	if h.DB.Create(&group).Error != nil {
+		log.Println("inserting group data to DB:", err)
 		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
 			"message": "Internal Server Error",
 		})
 		return
 	}
 
-	c.JSON(http.StatusCreated, timetable)
+	c.JSON(http.StatusCreated, group)
 }

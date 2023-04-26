@@ -69,6 +69,7 @@ func main() {
 
 	router.POST("/students", h.CreateStudent)
 	router.POST("/timetables", h.CreateTimetable)
+	router.POST("/groups", h.CreateGroup)
 
 	router.Run(":4000")
 }

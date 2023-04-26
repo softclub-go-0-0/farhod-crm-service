@@ -10,7 +10,7 @@ import (
 
 type Time time.Time
 
-const LAYOUT = "15:04"
+const TimeLayout = "15:04"
 
 func (t *Time) Scan(value interface{}) (err error) {
 	nullTime := &sql.NullTime{}
@@ -20,13 +20,13 @@ func (t *Time) Scan(value interface{}) (err error) {
 }
 
 func (t Time) Value() (driver.Value, error) {
-	y, m, d := time.Time(t).Date()
-	return time.Date(y, m, d, 0, 0, 0, 0, time.Time(t).Location()), nil
+	year, month, day := time.Time(t).Date()
+	return time.Date(year, month, day, 0, 0, 0, 0, time.Time(t).Location()), nil
 }
 
 // GormDataType gorm common data type
 func (t Time) GormDataType() string {
-	return "date"
+	return "time"
 }
 
 func (t Time) GobEncode() ([]byte, error) {
@@ -41,16 +41,16 @@ func (t Time) MarshalJSON() ([]byte, error) {
 	if time.Time(t).IsZero() {
 		return nil, nil
 	}
-	return []byte(fmt.Sprintf(`"%s"`, time.Time(t).Format(LAYOUT))), nil
+	return []byte(fmt.Sprintf(`"%s"`, time.Time(t).Format(TimeLayout))), nil
 }
 
 func (t *Time) UnmarshalJSON(b []byte) error {
 	s := strings.Trim(string(b), `"`)
-	parsedDate, err := time.Parse(LAYOUT, s)
-	*t = Time(parsedDate)
+	parsedTime, err := time.Parse(TimeLayout, s)
+	*t = Time(parsedTime)
 	return err
 }
 
 func (t Time) String() string {
-	return time.Time(t).Format(LAYOUT)
+	return time.Time(t).Format(TimeLayout)
 }
