@@ -19,6 +19,7 @@ func (h *handler) GetAllTeachers(c *gin.Context) {
 		return
 	}
 
+	c.Header("Message", "Gap nest brat!")
 	c.JSON(http.StatusOK, teachers)
 }
 

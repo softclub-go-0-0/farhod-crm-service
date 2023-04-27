@@ -8,6 +8,7 @@ import (
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"log"
+	"net/http"
 )
 
 func DBInit(user, password, dbname, port string) (*gorm.DB, error) {
@@ -55,6 +56,8 @@ func main() {
 
 	router := gin.Default()
 
+	router.Use(AuthMiddleware("somekey"))
+
 	router.GET("/teachers", h.GetAllTeachers)
 	router.POST("/teachers", h.CreateTeacher)
 	router.GET("/teachers/:teacherID", h.GetOneTeacher)
@@ -93,4 +96,18 @@ func main() {
 	}
 
 	router.Run(":4000")
+}
+
+func AuthMiddleware(key string) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		bracelet := c.GetHeader("bracelet")
+		if bracelet != key {
+			log.Println("unauthorized access")
+			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
+				"message": "Who are you, warrior?",
+			})
+			return
+		}
+		c.Next()
+	}
 }
