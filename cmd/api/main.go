@@ -43,6 +43,7 @@ func main() {
 	DBUser := flag.String("dbuser", "postgres", "Enter the name of a DB user")
 	DBPassword := flag.String("dbpassword", "postgres", "Enter the password of user")
 	DBPort := flag.String("dbport", "5432", "Enter the port of DB")
+	Port := flag.String("listenport", "4000", "Which port to listen")
 	flag.Parse()
 
 	db, err := DBInit(*DBUser, *DBPassword, *DBName, *DBPort)
@@ -94,7 +95,7 @@ func main() {
 		}
 	}
 
-	router.Run(":4000")
+	router.Run(":" + *Port)
 }
 
 func AuthMiddleware(key string) gin.HandlerFunc {
