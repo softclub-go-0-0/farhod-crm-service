@@ -64,11 +64,11 @@ func main() {
 	router.PUT("/teachers/:teacherID", h.UpdateTeacher)
 	router.DELETE("/teachers/:teacherID", h.DeleteTeacher)
 
-	router.GET("/courses", h.GetAllTeachers)
-	router.POST("/courses", h.CreateTeacher)
-	router.GET("/courses/:courseID", h.GetOneTeacher)
-	router.PUT("/courses/:courseID", h.UpdateTeacher)
-	router.DELETE("/courses/:courseID", h.DeleteTeacher)
+	router.GET("/courses", h.GetAllCourses)
+	router.POST("/courses", h.CreateCourse)
+	router.GET("/courses/:courseID", h.GetOneCourse)
+	router.PUT("/courses/:courseID", h.UpdateCourse)
+	router.DELETE("/courses/:courseID", h.DeleteCourse)
 
 	router.GET("/timetables", h.GetAllTimetables)
 	router.POST("/timetables", h.CreateTimetable)
