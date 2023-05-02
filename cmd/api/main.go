@@ -78,11 +78,11 @@ func main() {
 
 	groups := router.Group("/groups")
 	{
-		groups.GET("/", h.GetAllTeachers)
-		groups.POST("/", h.CreateTeacher)
-		groups.GET("/:groupID", h.GetOneTeacher)
-		groups.PUT("/:groupID", h.UpdateTeacher)
-		groups.DELETE("/:groupID", h.DeleteTeacher)
+		groups.GET("/", h.GetAllGroups)
+		groups.POST("/", h.CreateGroup)
+		groups.GET("/:groupID", h.GetOneGroup)
+		groups.PUT("/:groupID", h.UpdateGroup)
+		groups.DELETE("/:groupID", h.DeleteGroup)
 
 		students := groups.Group("/:groupID/students")
 		{
