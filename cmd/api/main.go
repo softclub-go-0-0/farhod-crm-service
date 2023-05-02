@@ -86,12 +86,11 @@ func main() {
 
 		students := groups.Group("/:groupID/students")
 		{
-			students.GET("/", h.GetAllTeachers)
-			// implemented
+			students.GET("/", h.GetAllStudents)
 			students.POST("/", h.CreateStudent)
-			students.GET("/:studentID", h.GetOneTeacher)
-			students.PUT("/:studentID", h.UpdateTeacher)
-			students.DELETE("/:studentID", h.DeleteTeacher)
+			students.GET("/:studentID", h.GetOneStudent)
+			students.PUT("/:studentID", h.UpdateStudent)
+			students.DELETE("/:studentID", h.DeleteStudent)
 		}
 	}
 
