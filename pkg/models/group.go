@@ -2,6 +2,7 @@ package models
 
 import (
 	"github.com/google/uuid"
+	"github.com/paraparadox/datetime"
 	"gorm.io/gorm"
 	"time"
 )
@@ -12,7 +13,7 @@ type Group struct {
 	TeacherID   uuid.UUID      `json:"teacher_id"`
 	TimetableID uuid.UUID      `json:"timetable_id"`
 	Title       string         `json:"title" binding:"required"`
-	StartDate   Date           `json:"start_date" binding:"required"`
+	StartDate   datetime.Date  `json:"start_date" binding:"required"`
 	CreatedAt   time.Time      `json:"created_at"`
 	UpdatedAt   time.Time      `json:"updated_at"`
 	DeletedAt   gorm.DeletedAt `json:"-" gorm:"index"`

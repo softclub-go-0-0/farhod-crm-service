@@ -43,7 +43,7 @@ func (h *handler) GetOneTeacher(c *gin.Context) {
 	var teacher models.Teacher
 
 	if err := h.DB.First(&teacher, "id = ?", c.Param("teacherID")).Error; err != nil {
-		log.Println("client error - cannot find teacher:", err)
+		log.Println("getting a teacher:", err)
 		helpers.NotFound(c, "teacher")
 		return
 	}
