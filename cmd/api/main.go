@@ -40,8 +40,8 @@ func DBInit(user, password, dbname, port string) (*gorm.DB, error) {
 
 func main() {
 	DBName := flag.String("dbname", "crm_service", "Enter the name of DB")
-	DBUser := flag.String("dbuser", "crm_service", "Enter the name of a DB user")
-	DBPassword := flag.String("dbpassword", "crm_service", "Enter the password of user")
+	DBUser := flag.String("dbuser", "postgres", "Enter the name of a DB user")
+	DBPassword := flag.String("dbpassword", "postgres", "Enter the password of user")
 	DBPort := flag.String("dbport", "5432", "Enter the port of DB")
 	flag.Parse()
 
@@ -56,7 +56,7 @@ func main() {
 
 	router := gin.Default()
 
-	router.Use(AuthMiddleware("somekey"))
+	//router.Use(AuthMiddleware("somekey"))
 
 	router.GET("/teachers", h.GetAllTeachers)
 	router.POST("/teachers", h.CreateTeacher)
