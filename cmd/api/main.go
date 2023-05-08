@@ -1,14 +1,15 @@
 package main
 
 import (
-	"flag"
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 	"github.com/softclub-go-0-0/crm-service/pkg/handlers"
 	"github.com/softclub-go-0-0/crm-service/pkg/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"log"
 	"net/http"
+	"os"
 )
 
 func DBInit(user, password, dbname, port string) (*gorm.DB, error) {
@@ -39,14 +40,12 @@ func DBInit(user, password, dbname, port string) (*gorm.DB, error) {
 }
 
 func main() {
-	DBName := flag.String("dbname", "crm_service", "Enter the name of DB")
-	DBUser := flag.String("dbuser", "postgres", "Enter the name of a DB user")
-	DBPassword := flag.String("dbpassword", "postgres", "Enter the password of user")
-	DBPort := flag.String("dbport", "5432", "Enter the port of DB")
-	Port := flag.String("listenport", "4000", "Which port to listen")
-	flag.Parse()
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
 
-	db, err := DBInit(*DBUser, *DBPassword, *DBName, *DBPort)
+	db, err := DBInit(os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_NAME"), os.Getenv("DB_PORT"))
 	if err != nil {
 		log.Fatal("db connection error:", err)
 	}
@@ -95,7 +94,7 @@ func main() {
 		}
 	}
 
-	router.Run(":" + *Port)
+	router.Run(":" + os.Getenv("APP_PORT"))
 }
 
 func AuthMiddleware(key string) gin.HandlerFunc {
