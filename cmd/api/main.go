@@ -3,41 +3,11 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
+	"github.com/softclub-go-0-0/crm-service/pkg/database"
 	"github.com/softclub-go-0-0/crm-service/pkg/handlers"
-	"github.com/softclub-go-0-0/crm-service/pkg/models"
-	"gorm.io/driver/postgres"
-	"gorm.io/gorm"
 	"log"
-	"net/http"
 	"os"
 )
-
-func DBInit(user, password, dbname, port string) (*gorm.DB, error) {
-	dsn := "host=localhost" +
-		" user=" + user +
-		" password=" + password +
-		" dbname=" + dbname +
-		" port=" + port +
-		" sslmode=disable" +
-		" TimeZone=Asia/Dushanbe"
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
-	if err != nil {
-		return nil, err
-	}
-
-	err = db.AutoMigrate(
-		&models.Teacher{},
-		&models.Course{},
-		&models.Timetable{},
-		&models.Group{},
-		&models.Student{},
-	)
-	if err != nil {
-		return nil, err
-	}
-
-	return db, nil
-}
 
 func main() {
 	err := godotenv.Load()
@@ -45,7 +15,12 @@ func main() {
 		log.Fatal("Error loading .env file")
 	}
 
-	db, err := DBInit(os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_NAME"), os.Getenv("DB_PORT"))
+	db, err := database.DBInit(
+		os.Getenv("DB_USER"),
+		os.Getenv("DB_PASSWORD"),
+		os.Getenv("DB_NAME"),
+		os.Getenv("DB_PORT"),
+	)
 	if err != nil {
 		log.Fatal("db connection error:", err)
 	}
@@ -55,8 +30,6 @@ func main() {
 	h := handlers.NewHandler(db)
 
 	router := gin.Default()
-
-	//router.Use(AuthMiddleware("somekey"))
 
 	router.GET("/teachers", h.GetAllTeachers)
 	router.POST("/teachers", h.CreateTeacher)
@@ -95,18 +68,4 @@ func main() {
 	}
 
 	router.Run(":" + os.Getenv("APP_PORT"))
-}
-
-func AuthMiddleware(key string) gin.HandlerFunc {
-	return func(c *gin.Context) {
-		bracelet := c.GetHeader("bracelet")
-		if bracelet != key {
-			log.Println("unauthorized access")
-			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
-				"message": "Who are you, warrior?",
-			})
-			return
-		}
-		c.Next()
-	}
 }
